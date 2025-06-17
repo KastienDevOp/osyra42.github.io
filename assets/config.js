@@ -1,51 +1,43 @@
-// Complete JSON configuration for the entire app
 const appConfig = {
   "title": "Walmart Maintenance",
   "sections": [
     {
-      "id": "sweepFront",
-      "title": "SWEEP FRONT",
-      "items": ["GM Side", "Grocery Side", "Under Produce", "Between Registers"]
+      "id": "bathrooms",
+      "title": "BATHROOMS",
+      "items": {
+        "SWEEP FRONT": ["GM Side", "Grocery Side", "Under Produce", "Between Registers"],
+        "VACUUM": ["GM Ice", "Grocery Ice", "Produce Near", "Produce Far", "TLC", "Back Water"],
+        "TRASH": [
+          "TLC",
+          "GM Side",
+          "Female Restroom",
+          "Male Restroom",
+          "Customer Service",
+          "Bank",
+          "Grocery Side",
+          "Dressing Room",
+          "Break Room",
+          "Offices",
+          "Back Restroom"
+        ],
+        "BATHROOM": ["Sweep", "Paper Towel", "Toilet Paper", "Feminine Hygiene", "Chrome", "Sink", "Mirror", "Mop"],
+        "BREAKROOM": ["Paper Towels", "Soap", "Sink Table", "Food Table", "Phone Table", "Sweep", "Mop"]
+      }
     },
     {
-      "id": "vacuum",
-      "title": "VACUUM",
-      "items": ["GM Ice", "Grocery Ice", "Produce Near", "Produce Far", "TLC", "Back Water"]
+      "id": "outside",
+      "title": "OUTSIDE",
+      "items": {}
     },
     {
-      "id": "trash",
-      "title": "TRASH",
-      "items": [
-        "TLC",
-        "GM Side",
-        "Female Restroom",
-        "Male Restroom",
-        "Customer Service",
-        "Bank",
-        "Grocery Side",
-        "Dressing Room",
-        "Break Room",
-        "Offices",
-        "Back Restroom"
-      ]
+      "id": "scrubber",
+      "title": "SCRUBBER",
+      "items": {}
     },
     {
-      "id": "bathroom",
-      "title": "BATHROOM",
-      "items": ["Sweep", "Paper Towel", "Toilet Paper", "Feminine Hygiene", "Chrome", "Sink", "Mirror", "Mop"]
-    },
-    {
-      "id": "breakroom",
-      "title": "BREAKROOM",
-      "items": [
-        "Paper Towels",
-        "Soap",
-        "Sink Table",
-        "Food Table",
-        "Phone Table",
-        "Sweep",
-        "Mop"
-      ]
+      "id": "grocery",
+      "title": "GROCERY",
+      "items": {}
     }
   ]
 };

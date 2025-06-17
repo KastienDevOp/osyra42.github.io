@@ -4,12 +4,13 @@
   --coffee-medium: #a89f8a; /* Softened darker saddle brown */
   --coffee-accent: #b3704a; /* Softened darker chocolate */
   --coffee-completed: #70351c; /* Softened darker sienna */
+  --text-color: #f0e6d2; /* Lighter text color for better readability */
 }
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--coffee-light); /* Use the slightly darker light color */
-  color: var(--coffee-dark);
+  color: var(--text-color); /* Use lighter text color */
   margin: 0;
   padding: 0;
   padding-top: 40px;
@@ -37,7 +38,7 @@ body {
 }
 
 .progress-text {
-  color: var(--coffee-light);
+  color: var(--text-color); /* Use lighter text color */
   font-size: 12px;
   padding: 2px 10px;
   text-align: center;
@@ -65,10 +66,18 @@ h1 {
 }
 
 h2 {
-  color: var(--coffee-light);
+  color: var(--text-color); /* Use lighter text color */
   border-bottom: 2px solid var(--coffee-accent);
   padding-bottom: 5px;
   margin-top: 0;
+}
+
+h3.checklist-subheader {
+  color: var(--coffee-accent);
+  font-size: 1.2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .checklist {
@@ -106,17 +115,34 @@ h2 {
 .checklist-item label {
   cursor: pointer;
   flex-grow: 1; /* Allow label to take up remaining space */
+  color: var(--text-color); /* Use lighter text color */
 }
 
 .checklist-item.completed {
   text-decoration: line-through;
   opacity: 0.9; /* Slightly less opaque when completed */
   background-color: var(--coffee-dark); /* Darker background for completed */
-  color: var(--coffee-light);
+  color: var(--text-color); /* Use lighter text color */
   border-color: var(--coffee-dark); /* Darker border for completed */
   /* Subtle inner shadow for completed items */
   box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2),
               inset -1px -1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.checklist-subsection {
+  margin-top: 10px;
+  padding-left: 20px;
+  border-left: 2px solid var(--coffee-accent);
+}
+
+.checklist-subitems {
+  margin-left: 10px;
+}
+
+.checklist-item.sub-item {
+  padding-left: 10px;
+  background-color: var(--coffee-light);
+  border: 1px solid var(--coffee-medium);
 }
 
 p {
@@ -131,7 +157,7 @@ p a {
 
 /* Styles for collapsable sections */
 .collapsible-content {
-  max-height: 1000px; /* Initial max height (large enough to show content) */
+  max-height: none; /* Allow content to take up necessary height */
   overflow: hidden;
   transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
   opacity: 1;

@@ -47,13 +47,12 @@ document.addEventListener("DOMContentLoaded", function () {
       // }
     });
 
-
-    // Create checklist items
-    section.items.forEach((item) => {
-      const itemId = `${section.id}-${item.replace(/\s+/g, "-").toLowerCase()}`;
+    // Function to create a checklist item
+    function createChecklistItem(parent, itemText, isSubItem = false) {
+      const itemId = `${section.id}-${itemText.replace(/\s+/g, "-").toLowerCase()}`;
 
       const itemElement = document.createElement("div");
-      itemElement.className = "checklist-item";
+      itemElement.className = `checklist-item${isSubItem ? ' sub-item' : ''}`;
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
@@ -64,6 +63,18 @@ document.addEventListener("DOMContentLoaded", function () {
         updateProgress();
         if (checkbox.checked) {
           itemElement.classList.add("completed");
+          // Check all parent items if this is a sub-item
+          if (isSubItem) {
+            let parentItem = itemElement.parentElement;
+            while (parentItem && parentItem.classList.contains('checklist-item')) {
+              const parentCheckbox = parentItem.querySelector('input[type="checkbox"]');
+              if (parentCheckbox) {
+                parentCheckbox.checked = true;
+                parentItem.classList.add("completed");
+              }
+              parentItem = parentItem.parentElement;
+            }
+          }
         } else {
           itemElement.classList.remove("completed");
         }
@@ -71,13 +82,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const label = document.createElement("label");
       label.htmlFor = itemId;
-      label.textContent = item;
+      label.textContent = itemText;
 
       itemElement.appendChild(checkbox);
       itemElement.appendChild(label);
 
-      checklistElement.appendChild(itemElement);
-    });
+      parent.appendChild(itemElement);
+    }
+
+    // Function to create a nested checklist
+    function createNestedChecklist(parent, items, parentItem = null) {
+      if (Array.isArray(items)) {
+        items.forEach((item) => {
+          createChecklistItem(parent, item, parentItem !== null);
+        });
+      } else if (typeof items === 'object') {
+        Object.keys(items).forEach((key) => {
+          // Create a container for the sub-section
+          const subSection = document.createElement("div");
+          subSection.className = "checklist-subsection";
+
+          // Create a header for the sub-section
+          const subHeader = document.createElement("h3");
+          subHeader.className = "checklist-subheader collapsible-header"; // Add collapsible-header class
+          subHeader.textContent = key;
+          subHeader.style.cursor = 'pointer'; // Indicate clickable
+          subHeader.style.userSelect = 'none'; // Prevent text selection on click
+          subSection.appendChild(subHeader);
+
+          // Create a container for the sub-items
+          const subItemsContainer = document.createElement("div");
+          subItemsContainer.className = "checklist-subitems collapsible-content"; // Add collapsible-content class
+          subSection.appendChild(subItemsContainer);
+
+          // Add the sub-section to the parent
+          parent.appendChild(subSection);
+
+          // Add click event listener to the sub-header
+          subHeader.addEventListener('click', function() {
+            subItemsContainer.classList.toggle('collapsed');
+          });
+
+          // Recursively create the nested checklist
+          createNestedChecklist(subItemsContainer, items[key], key);
+        });
+      }
+    }
+
+    // Create the checklist items
+    createNestedChecklist(checklistElement, section.items);
   });
 
   // Progress bar functionality
